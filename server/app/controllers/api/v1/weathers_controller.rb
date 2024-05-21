@@ -9,19 +9,19 @@ module Api
         weather_service = WeatherService.new
         current_weather = weather_service.current_weather(params[:location])
         forecast = weather_service.forecast(params[:location], params[:days])
-        render json: { current: current_weather, forecast: forecast }
+        render json: { current: WeatherRepresenter.new(current_weather).as_json, forecast: forecast }
       end
 
       def current_weather
         weather_service = WeatherService.new
         current_weather = weather_service.current_weather(params[:location])
-        render json: { current: current_weather }
+        render json: WeatherRepresenter.new(current_weather).as_json
       end
 
       def forecast
         weather_service = WeatherService.new
         forecast = weather_service.forecast(params[:location], params[:days])
-        render json: { forecast: forecast }
+        render json: (forecast)
       end
 
       def save_weather
