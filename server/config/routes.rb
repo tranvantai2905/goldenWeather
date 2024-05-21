@@ -8,7 +8,6 @@ Rails.application.routes.draw do
         collection do
           get 'current_weather'
           get 'forecast'
-          post 'save_weather'
           get 'weather_history'
         end
       end

@@ -5,6 +5,7 @@ class WeatherRepresenter
 
   def as_json
     {
+      location: location_data,
       current: current_data
     }
   end
@@ -12,6 +13,10 @@ class WeatherRepresenter
   private
 
   attr_reader :weather
+
+  def location_data
+    weather['location']
+  end
 
   def current_data
     current_info = weather['current']

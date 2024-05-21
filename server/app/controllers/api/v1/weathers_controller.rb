@@ -15,30 +15,55 @@ module Api
       def current_weather
         weather_service = WeatherService.new
         current_weather = weather_service.current_weather(params[:location])
+
+        save_weather(current_weather)
+
+        # render json: current_weather
         render json: WeatherRepresenter.new(current_weather).as_json
       end
 
       def forecast
         weather_service = WeatherService.new
         forecast = weather_service.forecast(params[:location], params[:days])
-        render json: (forecast)
+        
+        # render json: forecast
+        render json: ForcecastRepresenter.new(forecast).as_json
       end
 
-      def save_weather
-        weather = Weather.new(weather_params)
-        if weather.save
-          render json: { status: 'Weather data saved' }, status: :ok
-        else
-          render json: { errors: weather.errors }, status: :unprocessable_entity
-        end
-      end
 
       def weather_history
-        weather_data = Weather.where(created_at: Date.today.all_day)
+        location = params[:location]
+        limit = params[:limit].to_i.nonzero? || 10
+    
+        weather_data = Weather.where(location: location).limit(limit)
         render json: weather_data
       end
 
       private
+
+      def save_weather(current_weather)
+        location = current_weather.dig('location', 'name')
+        date = Date.parse(current_weather.dig('location', 'localtime'))
+        
+        existing_weather = Weather.where(location: location, created_at: date.all_day).first
+    
+        unless existing_weather
+          # Tạo bản ghi mới nếu chưa tồn tại
+          weather = Weather.new(
+            location: location,
+            temperature: current_weather.dig('current', 'temp_c'),
+            wind_speed: current_weather.dig('current', 'wind_kph'),
+            humidity: current_weather.dig('current', 'humidity'),
+            forecast: current_weather.dig('current', 'condition')
+          )
+    
+          if weather.save
+            # Do nothing
+          else
+            render json: { errors: weather.errors }, status: :unprocessable_entity
+          end
+        end
+      end
 
       def weather_params
         params.require(:weather).permit(:location, :temperature, :wind_speed, :humidity, :forecast)

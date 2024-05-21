@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_21_084905) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_21_231634) do
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.datetime "created_at", null: false
@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_21_084905) do
     t.text "forecast"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["location", "created_at"], name: "index_weathers_on_location_and_created_at"
   end
 
 end
