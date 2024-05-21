@@ -25,7 +25,7 @@ Rails.application.routes.draw do
         collection do
           get '/', to: 'my_profile#index'
           put '/', to: 'my_profile#update'
-          delete '/', to: 'my_profile#destroy'
+          # delete '/', to: 'my_profile#destroy'
         end
       end
 
