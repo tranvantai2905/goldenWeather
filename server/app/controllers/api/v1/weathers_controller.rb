@@ -6,21 +6,21 @@ module Api
     class WeathersController < ApplicationController
       before_action :validate_days, only: [:forecast]
       def index
-        weather_service = WeatherService.new(params[:location])
-        current_weather = weather_service.current_weather
-        forecast = weather_service.forecast(params[:days])
+        weather_service = WeatherService.new
+        current_weather = weather_service.current_weather(params[:location])
+        forecast = weather_service.forecast(params[:location], params[:days])
         render json: { current: current_weather, forecast: forecast }
       end
 
       def current_weather
-        weather_service = WeatherService.new(params[:location])
-        current_weather = weather_service.current_weather
+        weather_service = WeatherService.new
+        current_weather = weather_service.current_weather(params[:location])
         render json: { current: current_weather }
       end
 
       def forecast
-        weather_service = WeatherService.new(params[:location])
-        forecast = weather_service.forecast(params[:days])
+        weather_service = WeatherService.new
+        forecast = weather_service.forecast(params[:location], params[:days])
         render json: { forecast: forecast }
       end
 

@@ -10,6 +10,14 @@ Rails.application.routes.draw do
           get 'weather_history'
         end
       end
+
+      resources :subscriptions, only: [] do
+        collection do
+          post 'subscribe'
+          get 'confirm'
+          post 'unsubscribe'
+        end
+      end
     end
   end
 end

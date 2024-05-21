@@ -1,0 +1,10 @@
+<!-- app/views/user_mailer/daily_forecast_email.html.erb -->
+<p>Hello <%= @user.email %>,</p>
+
+<p>Here is your daily weather forecast for <%= @weather_data['location']['name'] %>:</p>
+
+<ul>
+  <li>Temperature: <%= @weather_data['current']['temp_c'] %>°C</li>
+  <li>Wind Speed: <%= @weather_data['current']['wind_kph'] %> kph</li>
+  <li>Humidity: <%= @weather_data['current']['humidity'] %>%</li>
+</ul>
