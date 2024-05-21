@@ -28,6 +28,8 @@ Rails.application.routes.draw do
           delete '/', to: 'my_profile#destroy'
         end
       end
+
+      resources :users, only: %i[index update destroy]
     end
   end
 end

@@ -8,7 +8,8 @@ class UserRepresenter
       id: user.id,
       username: user.username,
       email: user.email,
-      city: user.city
+      city: user.city,
+      confirmed: user.confirmed
     }
   end
 

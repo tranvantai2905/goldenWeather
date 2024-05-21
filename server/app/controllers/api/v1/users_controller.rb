@@ -4,12 +4,12 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     users = User.all
-    render json: users, status: :ok
+    render json: UsersRepresenter.new(users).as_json, status: :ok
   end
 
   def update
     if @user.update(user_params)
-      render json: @user, status: :ok
+      render json: UserRepresenter.new(@user).as_json, status: :ok
     else
       render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
     end
