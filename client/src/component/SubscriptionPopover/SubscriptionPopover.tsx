@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import SignupForm from "../SignupForm";
-import Tab from '@mui/material/Tab';
+import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState } from "react";
 import SubscriptionForm from "../subscriptionForm/SubscriptionForm";
@@ -26,15 +26,16 @@ export default function SubscriptionPopover() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    console.log(event)
     setValue(newValue);
   };
 
-  const handleBack = ()=>{
-    setValue('1')
-  }
+  const handleBack = () => {
+    setValue("1");
+  };
   return (
     <div>
       <div className="flex flex-col gap-2 p-4 rounded-lg bg-black h-32">
@@ -77,16 +78,23 @@ export default function SubscriptionPopover() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Sign-up" value="1" sx={{fontWeight: 800}}/>
-            <Tab label="subscribe" value="2" sx={{fontWeight: 800}}/>
-          </TabList>
-        </Box>
-        <TabPanel value="1"><SignupForm/></TabPanel>
-        <TabPanel value="2"><SubscriptionForm handleBack={handleBack}/></TabPanel>
-      </TabContext>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <TabList
+                onChange={handleChange}
+                aria-label="lab API tabs example"
+              >
+                <Tab label="Sign-up" value="1" sx={{ fontWeight: 800 }} />
+                <Tab label="subscribe" value="2" sx={{ fontWeight: 800 }} />
+              </TabList>
+            </Box>
+            <TabPanel value="1">
+              <SignupForm />
+            </TabPanel>
+            <TabPanel value="2">
+              <SubscriptionForm handleBack={handleBack} />
+            </TabPanel>
+          </TabContext>
         </Box>
       </Modal>
     </div>

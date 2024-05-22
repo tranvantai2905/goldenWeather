@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { subscribe } from "../../api/OpenWeatherService";
+import { notify_error, notify_success } from "../../App";
 
 interface SubscriptionFormProps {
   handleBack: () => void;
@@ -9,10 +10,16 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ handleBack }) => {
   const email = useRef("");
 
   const onSubmit = async () => {
-    const res = await subscribe({
-      email: email.current,
-    });
-    console.log(res);
+    try{
+      const res = await subscribe({
+        email: email.current,
+      });
+      console.log(res);
+      notify_success(res?.status||"")
+    }
+    catch{
+      notify_error()
+    }
   };
   return (
     <>

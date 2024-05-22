@@ -1,6 +1,7 @@
 import { Link } from "@mui/material";
 import { useRef } from "react";
 import { signUp } from "../../api/OpenWeatherService";
+import { notify_error, notify_success } from "../../App";
 
 const SignupForm = () => {
   const username = useRef("");
@@ -9,17 +10,21 @@ const SignupForm = () => {
   const city = useRef("");
 
   const onSubmit = async () => {
-    console.log(username, password, email, city);
-    const res = await signUp(
-      {
-      user: {
-        username: username.current, 
-        password: password.current,
-        email: email.current, 
-        city: city.current, 
-      }
-    })
-    console.log(res)
+    try{
+      await signUp(
+        {
+        user: {
+          username: username.current, 
+          password: password.current,
+          email: email.current, 
+          city: city.current, 
+        }
+      })
+      notify_success("Sign up successfully")
+    }
+    catch{
+      notify_error()
+    }
   };
   return (
     <>

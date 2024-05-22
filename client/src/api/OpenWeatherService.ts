@@ -25,7 +25,7 @@ export async function fetchCities(input :string) {
     return data;
   } catch (error) {
     console.log(error);
-    return;
+    throw Error('Error fetching Citys');
   }
 }
 
@@ -37,7 +37,7 @@ export async function fetchCurrentWeather(payload: FetchCurrentWeatherPayload): 
     return response.data;
   } catch (error) {
     console.error("Error fetching current weather:", error);
-    return null;
+    throw Error('Error fetching current weather');
   }
 }
 
@@ -52,7 +52,7 @@ export async function fetchWeatherForecast(payload: FetchWeatherForecastPayload)
     return response.data;
   } catch (error) {
     console.error('Error fetching weather forecast:', error);
-    return null;
+    throw Error('Error fetching weather forecast');
   }
 }
 
@@ -62,7 +62,7 @@ export async function signUp(payload: SignUpPayload): Promise<SignUpResponse | n
       return response.data;
   } catch (error) {
       console.error('Error signing up:', error);
-      return null;
+      throw Error('Error signing up');
   }
 }
 
@@ -72,6 +72,6 @@ export async function subscribe(payload: SubscribePayload): Promise<SubscribeRes
       return response.data;
   } catch (error) {
       console.error('Error subscribing:', error);
-      return null;
+      throw Error('Error subscribing');
   }
 }
