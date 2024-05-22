@@ -2,8 +2,7 @@ require 'httparty'
 
 class WeatherService
   include HTTParty
-  base_uri 'https://api.weatherapi.com/v1'
-
+  base_uri ENV['WEATHER_API_URL']
   def initialize
     @api_key = ENV['WEATHER_API_KEY']
   end
