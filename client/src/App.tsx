@@ -3,20 +3,22 @@ import { Box, Container, Grid, Link, Stack, Typography } from "@mui/material";
 import Logo from "./assets/logo.png";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Search from "./component/Search";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorBox from "./component/Reusable/ErrorBox";
 import LoadingBox from "./component/Reusable/LoadingBox";
 import {
   fetchCurrentWeather,
   fetchWeatherForecast,
+  getWeatherHistory,
 } from "./api/OpenWeatherService";
-import { CurrentWeather, ForecastDay, LocationInfo } from "./api/types";
+import { CurrentWeather, ForecastDay, LocationInfo, WeatherHistoryResponse } from "./api/types";
 import TodayWeather from "./component/TodayWeather/TodayWeather";
 import WeeklyForecast from "./component/WeeklyForecast/WeeklyForecast";
 import SubscriptionPopover from "./component/SubscriptionPopover/SubscriptionPopover";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import WeatherHistory from "./component/WeatherHistory/WeatherHistory";
 
 export const notify_success = (message: string) =>
   toast.success(message, {
@@ -53,6 +55,20 @@ function App() {
     null
   );
   const [forecast, setForecast] = useState<ForecastDay[] | null>(null);
+  const [weatherHistory, setWeatherHistory] = useState<WeatherHistoryResponse[] | null>(null);
+
+
+  useEffect(()=>{
+    if(location){
+      getHistory(location.name, 4)
+    }
+  }, [location])
+
+  const getHistory = async(location:string, limit:number)=>{
+    const res = await getWeatherHistory({params:{location, limit}})
+    console.log({res})
+    setWeatherHistory(res)
+  }
 
   const searchChangeHandler = async (
     enteredData: { value: string; label: string } | null
@@ -135,6 +151,7 @@ function App() {
         </Grid>
         <Grid item xs={12} md={6}>
           <WeeklyForecast forecast={forecast} />
+          <WeatherHistory weatherHistory={weatherHistory} />
         </Grid>
       </React.Fragment>
     );
@@ -180,11 +197,11 @@ function App() {
   }
 
   return (
-    <div>
-      <Stack direction="row" spacing={2} alignItems={"flex-start"}>
+    <div className="flex justify-center items-center">
+      <Stack direction={{sm:"column",md:"row"}} spacing={2} alignItems={{sm:"center", md:"flex-end"}} justifyContent={{sm:"center", md:"center"} } maxWidth={{ xs: "95%", sm: "80%", md: "1500px" }}>
         <Container
           sx={{
-            maxWidth: { xs: "95%", sm: "80%", md: "1100px" },
+            maxWidth: { xs: "95%", sm: "80%", md: "1400px" },
             width: "100%",
             height: "100%",
             margin: "0 auto",
@@ -220,8 +237,6 @@ function App() {
                   alt="logo"
                   src={Logo}
                 />
-
-                {/* <UTCDatetime /> */}
                 <Link
                   href="https://github.com/tranvantai2905"
                   target="_blank"

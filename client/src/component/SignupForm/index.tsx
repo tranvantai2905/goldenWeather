@@ -31,12 +31,12 @@ const SignupForm = () => {
       <section className="relative z-10 overflow-hidden">
         <div className="container">
           <div className="flex flex-wrap">
-            <div className="w-full px-4">
-              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-6 py-10 dark:bg-dark sm:p-[20px]">
-                  <div className="mb-8">
+            <div className="w-full px-1 sm:px-2 md:px-4">
+              <div className="shadow-three mx-auto max-w-[500px] rounded bg-white px-1 sm:px-2 md:px-6 py-1 sm:py-5 md:py-10 dark:bg-dark sm:p-[20px]">
+                  <div className="mb-2 sm:mb-4 md:mb-8">
                     <label
                       htmlFor="name"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-3 block text-sm text-blue-800 dark:text-black"
                     >
                       Username
                     </label>
@@ -44,14 +44,14 @@ const SignupForm = () => {
                       type="text"
                       name="username"
                       placeholder="Enter your Username"
-                      className="border-stroke dark:text-white dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke dark:text-white text-black w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                       onChange={(e) => (username.current = e.target.value)}
                     />
                   </div>
-                  <div className="mb-8">
+                  <div className="mb-2 sm:mb-4 md:mb-8">
                     <label
                       htmlFor="email"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-3 block text-sm text-blue-800 dark:text-black"
                     >
                       Work Email
                     </label>
@@ -59,14 +59,14 @@ const SignupForm = () => {
                       type="email"
                       name="email"
                       placeholder="Enter your Email"
-                      className="border-stroke dark:text-white dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke dark:text-white text-black w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                       onChange={(e) => (email.current = e.target.value)}
                     />
                   </div>
-                  <div className="mb-8">
+                  <div className="mb-2 sm:mb-4 md:mb-8">
                     <label
                       htmlFor="password"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-3 block text-sm text-blue-800 dark:text-black"
                     >
                       Your Password
                     </label>
@@ -74,15 +74,15 @@ const SignupForm = () => {
                       type="password"
                       name="password"
                       placeholder="Enter your Password"
-                      className="border-stroke dark:text-white dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke dark:text-white text-black w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                       onChange={(e) => (password.current = e.target.value)}
                     />
                   </div>
 
-                  <div className="mb-8">
+                  <div className="mb-2 sm:mb-4 md:mb-8">
                     <label
                       htmlFor="City"
-                      className="mb-3 block text-sm text-dark dark:text-white"
+                      className="mb-3 block text-sm text-blue-800 dark:text-black"
                     >
                       Your City
                     </label>
@@ -90,11 +90,11 @@ const SignupForm = () => {
                       type="text"
                       name="city"
                       placeholder="Enter your City"
-                      className="border-stroke dark:text-white dark:shadow-two w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
+                      className="border-stroke dark:text-white text-black w-full rounded-sm border bg-[#f8f8f8] px-6 py-3 text-base text-body-color outline-none transition-all duration-300 focus:border-primary dark:border-transparent dark:bg-[#2C303B] dark:focus:border-primary dark:focus:shadow-none"
                       onChange={(e) => (city.current = e.target.value)}
                     />
                   </div>
-                  <div className="mb-8 flex">
+                  <div className="mb-2 sm:mb-4 md:mb-8 flex">
                     <label
                       htmlFor="checkboxLabel"
                       className="flex cursor-pointer select-none text-sm font-medium text-body-color"
@@ -105,7 +105,7 @@ const SignupForm = () => {
                           id="checkboxLabel"
                           className="sr-only"
                         />
-                        <div className="box mr-4 mt-1 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
+                        <div className="box mr-1 sm:mr-2 md:mr-4 mt-1 flex h-5 w-5 items-center justify-center rounded border border-body-color border-opacity-20 dark:border-white dark:border-opacity-10">
                           <span className="opacity-100">
                             <svg
                               width="11"
@@ -124,9 +124,9 @@ const SignupForm = () => {
                           </span>
                         </div>
                       </div>
-                      <span>
+                      <span className="sm:text-xs md:text-base">
                         By creating account means you agree to the
-                        <a href="#0" className="text-primary hover:underline">
+                        <a href="#0" className="sm:text-xs md:text-base text-primary hover:underline">
                           {" "}
                           Terms and Conditions{" "}
                         </a>
@@ -138,14 +138,14 @@ const SignupForm = () => {
                       </span>
                     </label>
                   </div>
-                  <div className="mb-6">
+                  <div className="mb-1 sm:mb-4 md:mb-8">
                     <button className="shadow-submit flex w-full items-center justify-center rounded-sm bg-blue-400 px-9 py-4 text-base font-medium text-black duration-300 hover:bg-slate-300"
                     onClick={() => onSubmit()}
                     >
                       Sign up
                     </button>
                   </div>
-                <p className="text-center text-base font-medium text-body-color">
+                <p className="sm:text-xs md:text-base text-center font-medium text-body-color">
                   Already using Startup?{" "}
                   <Link
                     href="/signin"

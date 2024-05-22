@@ -1,6 +1,6 @@
 export type FetchCurrentWeatherPayload = {
   location: string;
-}
+};
 
 export type LocationInfo = {
   name: string;
@@ -11,13 +11,13 @@ export type LocationInfo = {
   tz_id: string;
   localtime_epoch: number;
   localtime: string;
-}
+};
 
 export type Condition = {
   text: string;
   icon: string;
   code: number;
-}
+};
 
 export type CurrentWeather = {
   temp_c: number;
@@ -28,12 +28,12 @@ export type CurrentWeather = {
   cloud: number;
   feelslike_c: number;
   uv: number;
-}
+};
 
 export type WeatherResponse = {
   location: LocationInfo;
   current: CurrentWeather;
-}
+};
 
 ///FetchWeatherForecastType
 export type FetchWeatherForecastPayload = {
@@ -48,7 +48,7 @@ export type ForecastCondition = {
 };
 
 export type HourForecast = {
-  time: string,
+  time: string;
   temp_c: number;
   condition: ForecastCondition;
   wind_mph: number;
@@ -110,10 +110,10 @@ export type ForecastResponse = {
 
 export type SignUpPayload = {
   user: {
-      email: string;
-      username: string;
-      password: string;
-      city: string;
+    email: string;
+    username: string;
+    password: string;
+    city: string;
   };
 };
 
@@ -129,4 +129,24 @@ export type SubscribePayload = {
 
 export type SubscribeResponse = {
   status: string;
+};
+
+//History
+
+export type WeatherHistoryResponse = {
+  id: number;
+  location: string;
+  temperature: number;
+  wind_speed: number;
+  humidity: number;
+  forecast: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type WeatherHistoryParam = {
+  params: {
+    location: string;
+    limit: number;
+  };
 };
