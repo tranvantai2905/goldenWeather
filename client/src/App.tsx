@@ -1,38 +1,159 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Box, Container, Grid, Link, Typography } from '@mui/material';
+import Logo from './assets/logo.png';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Search from './component/Search';
+import { useState } from 'react';
+import ErrorBox from './component/Reusable/ErrorBox';
+import LoadingBox from './component/Reusable/LoadingBox';
+import { fetchCurrentWeather } from './api/OpenWeatherService';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const searchChangeHandler = async (enteredData: {value:string, label:string}) => {
+    const location = enteredData.label
+    console.log(location)
+    setIsLoading(true);
+    const res = await fetchCurrentWeather({location})
+    console.log(res)
+    setIsLoading(false);
+  };
+
+  let appContent = (
+    <Box
+      component="div"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{
+        width: '100%',
+        minHeight: '500px',
+      }}
+    >
+
+      <Typography
+        variant="h4"
+        component="h4"
+        sx={{
+          fontSize: { xs: '12px', sm: '14px' },
+          color: 'rgba(255,255,255, .85)',
+          fontFamily: 'Poppins',
+          textAlign: 'center',
+          margin: '2rem 0',
+          maxWidth: '80%',
+          lineHeight: '22px',
+        }}
+      >
+        Explore current weather data and 6-day forecast of more than 200,000
+        cities!
+      </Typography>
+    </Box>
+  );
+
+  if (error) {
+    appContent = (
+      <ErrorBox
+        margin="3rem auto"
+        flex="inherit"
+        errorMessage="Something went wrong"
+      />
+    );
+  }
+
+  if (isLoading) {
+    appContent = (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          minHeight: '500px',
+        }}
+      >
+        <LoadingBox value="1">
+          <Typography
+            variant="h3"
+            component="h3"
+            sx={{
+              fontSize: { xs: '10px', sm: '12px' },
+              color: 'rgba(255, 255, 255, .8)',
+              lineHeight: 1,
+              fontFamily: 'Poppins',
+            }}
+          >
+            Loading...
+          </Typography>
+        </LoadingBox>
+      </Box>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <Container
+      sx={{
+        maxWidth: { xs: '95%', sm: '80%', md: '1100px' },
+        width: '100%',
+        height: '100%',
+        margin: '0 auto',
+        padding: '1rem 0 3rem',
+        marginBottom: '1rem',
+        borderRadius: {
+          xs: 'none',
+          sm: '0 0 1rem 1rem',
+        },
+        boxShadow: {
+          xs: 'none',
+          sm: 'rgba(0,0,0, 0.5) 0px 10px 15px -3px, rgba(0,0,0, 0.5) 0px 4px 6px -2px',
+        },
+      }}
+    >
+      <Grid container columnSpacing={2}>
+        <Grid item xs={12}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{
+              width: '100%',
+              marginBottom: '1rem',
+            }}
+          >
+            <Box
+              component="img"
+              sx={{
+                height: { xs: '16px', sm: '22px', md: '26px' },
+                width: 'auto',
+              }}
+              alt="logo"
+              src={Logo}
+            />
 
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
+            {/* <UTCDatetime /> */}
+            <Link
+              href="https://github.com/Amin-Awinti"
+              target="_blank"
+              underline="none"
+              sx={{ display: 'flex' }}
+            >
+              <GitHubIcon
+                sx={{
+                  fontSize: { xs: '20px', sm: '22px', md: '26px' },
+                  color: 'white',
+                  '&:hover': { color: '#2d95bd' },
+                }}
+              />
+            </Link>
+          </Box>
+          <Search onSearchChange={searchChangeHandler} />
+        </Grid>
+        {appContent}
+      </Grid>
+    </Container>
   )
 }
 
