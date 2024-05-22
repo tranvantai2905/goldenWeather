@@ -58,7 +58,7 @@ export async function fetchWeatherForecast(payload: FetchWeatherForecastPayload)
 
 export async function signUp(payload: SignUpPayload): Promise<SignUpResponse | null> {
   try {
-      const response = await instance.post<SignUpResponse>('http://localhost:3000/api/v1/signup', payload);
+      const response = await instance.post<SignUpResponse>('/signup', payload);
       return response.data;
   } catch (error) {
       console.error('Error signing up:', error);
@@ -68,7 +68,7 @@ export async function signUp(payload: SignUpPayload): Promise<SignUpResponse | n
 
 export async function subscribe(payload: SubscribePayload): Promise<SubscribeResponse | null> {
   try {
-      const response = await instance.post<SubscribeResponse>('http://localhost:3000/api/v1/subscriptions/subscribe', payload);
+      const response = await instance.post<SubscribeResponse>('/subscriptions/subscribe', payload);
       return response.data;
   } catch (error) {
       console.error('Error subscribing:', error);
