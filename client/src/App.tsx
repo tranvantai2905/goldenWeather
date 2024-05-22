@@ -131,8 +131,8 @@ function App() {
           lineHeight: "22px",
         }}
       >
-        Explore current weather data and 6-day forecast of more than 200,000
-        cities!
+        Explore current weather data and 4-day forecast of more than 200,000
+        cities (Hanoi, Danang, Ho Chi Minh City, ...)!
       </Typography>
     </Box>
   );
@@ -198,7 +198,7 @@ function App() {
 
   return (
     <div className="flex justify-center items-center">
-      <Stack direction={{sm:"column",md:"row"}} spacing={2} alignItems={{sm:"center", md:"flex-end"}} justifyContent={{sm:"center", md:"center"} } maxWidth={{ xs: "95%", sm: "80%", md: "1500px" }}>
+      <Stack direction={{sm:"column",md:"row"}} spacing={2} alignItems={{sm:"center", md:"flex-end"}} justifyContent={{sm:"center", md:"center"} } maxWidth={{ xs: "95%", sm: "80%", md: "1500px" }} minWidth={{ md: "1100px" }}>
         <Container
           sx={{
             maxWidth: { xs: "95%", sm: "80%", md: "1400px" },
