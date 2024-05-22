@@ -6,7 +6,7 @@ module Api
         user = User.find_by(email: params[:email])
         if user
           user.confirmation_token = SecureRandom.hex(10)
-          user.save
+          user.save!
           UserMailer.confirmation_email(user).deliver_now
           render json: { status: 'Confirmation email sent' }, status: :ok
         else
