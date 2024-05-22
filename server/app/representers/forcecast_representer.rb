@@ -34,6 +34,7 @@ class ForcecastRepresenter
 
   def represent_hour(hour)
     {
+      time: hour["time"],
       temp_c: hour['temp_c'],
       condition: hour['condition'],
       wind_mph: hour['wind_mph'],

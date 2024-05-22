@@ -1,5 +1,5 @@
 import instance from "./instance";
-import { FetchCurrentWeatherPayload, WeatherResponse } from "./types";
+import { FetchCurrentWeatherPayload, FetchWeatherForecastPayload, ForecastResponse, SignUpPayload, SignUpResponse, SubscribePayload, SubscribeResponse, WeatherResponse } from "./types";
 
 const GEO_API_URL = 'https://wft-geo-db.p.rapidapi.com/v1/geo';
 
@@ -38,5 +38,40 @@ export async function fetchCurrentWeather(payload: FetchCurrentWeatherPayload): 
   } catch (error) {
     console.error("Error fetching current weather:", error);
     return null;
+  }
+}
+
+export async function fetchWeatherForecast(payload: FetchWeatherForecastPayload): Promise<ForecastResponse | null> {
+  try {
+    const response = await instance.get<ForecastResponse>('/weathers/forecast', {
+      params: {
+        location: payload.location,
+        days: payload.days,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching weather forecast:', error);
+    return null;
+  }
+}
+
+export async function signUp(payload: SignUpPayload): Promise<SignUpResponse | null> {
+  try {
+      const response = await instance.post<SignUpResponse>('http://localhost:3000/api/v1/signup', payload);
+      return response.data;
+  } catch (error) {
+      console.error('Error signing up:', error);
+      return null;
+  }
+}
+
+export async function subscribe(payload: SubscribePayload): Promise<SubscribeResponse | null> {
+  try {
+      const response = await instance.post<SubscribeResponse>('http://localhost:3000/api/v1/subscriptions/subscribe', payload);
+      return response.data;
+  } catch (error) {
+      console.error('Error subscribing:', error);
+      return null;
   }
 }
