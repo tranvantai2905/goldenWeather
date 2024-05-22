@@ -7,20 +7,35 @@ import { useState } from 'react';
 import ErrorBox from './component/Reusable/ErrorBox';
 import LoadingBox from './component/Reusable/LoadingBox';
 import { fetchCurrentWeather } from './api/OpenWeatherService';
+import { CurrentWeather, LocationInfo } from './api/types';
+
 
 
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
-  const searchChangeHandler = async (enteredData: {value:string, label:string}) => {
-    const location = enteredData.label
+
+  const [location, setLocation] = useState<LocationInfo|null>(null)
+  const [currentWeather, setCurrentWeather] = useState<CurrentWeather|null>(null)
+  const searchChangeHandler = async (enteredData: {value:string, label:string}|null) => {
+    const location = enteredData?.label? enteredData?.label: ""
     console.log(location)
     setIsLoading(true);
+
     const res = await fetchCurrentWeather({location})
-    console.log(res)
+    if (res) {
+      setLocation(res.location);
+      setCurrentWeather(res.current);
+    } else {
+      setError(true);
+      console.error("Failed to fetch current weather data.");
+    }
+
     setIsLoading(false);
   };
+  
+  console.log(location, currentWeather)
 
   let appContent = (
     <Box
@@ -75,7 +90,7 @@ function App() {
           minHeight: '500px',
         }}
       >
-        <LoadingBox value="1">
+        <LoadingBox>
           <Typography
             variant="h3"
             component="h3"
@@ -154,7 +169,6 @@ function App() {
         {appContent}
       </Grid>
     </Container>
-  )
-}
-
-export default App
+  )}
+  
+  export default App

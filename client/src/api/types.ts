@@ -1,8 +1,8 @@
-export interface FetchCurrentWeatherPayload {
+export type FetchCurrentWeatherPayload = {
   location: string;
 }
 
-export interface LocationInfo {
+export type LocationInfo = {
   name: string;
   region: string;
   country: string;
@@ -13,13 +13,13 @@ export interface LocationInfo {
   localtime: string;
 }
 
-export interface Condition {
+export type Condition = {
   text: string;
   icon: string;
   code: number;
 }
 
-export interface CurrentWeather {
+export type CurrentWeather = {
   temp_c: number;
   condition: Condition;
   wind_mph: number;
@@ -30,7 +30,7 @@ export interface CurrentWeather {
   uv: number;
 }
 
-export interface WeatherResponse {
+export type WeatherResponse = {
   location: LocationInfo;
   current: CurrentWeather;
 }
