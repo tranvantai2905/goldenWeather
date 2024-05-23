@@ -29,7 +29,7 @@ Golden Weather is a weather forecasting application that allows users to get the
 
 - **Front-end:** React.js
 - **Back-end:** Ruby on Rails
-- **APIs:** OpenWeatherMap API for fetching weather data
+- **APIs:**  https://www.weatherapi.com
 
 ## Installation
 
