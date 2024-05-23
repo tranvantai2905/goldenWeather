@@ -17,6 +17,7 @@ Rails.application.routes.draw do
           post 'subscribe'
           get 'confirm'
           post 'unsubscribe'
+          get 'unsubscribe_confirm'
         end
       end
 

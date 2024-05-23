@@ -1,9 +1,11 @@
-import { Link } from "@mui/material";
 import { useRef } from "react";
-import { signUp } from "../../api/OpenWeatherService";
+import { signUp } from "../../api/WeatherService";
 import { notify_error, notify_success } from "../../App";
 
-const SignupForm = () => {
+interface SignupFromProps{
+  handleForward: ()=>void
+}
+const SignupForm: React.FC<SignupFromProps> = ({handleForward}) => {
   const username = useRef("");
   const password = useRef("");
   const email = useRef("");
@@ -146,13 +148,13 @@ const SignupForm = () => {
                     </button>
                   </div>
                 <p className="sm:text-xs md:text-base text-center font-medium text-body-color">
-                  Already using Startup?{" "}
-                  <Link
-                    href="/signin"
-                    className="text-primary hover:underline"
+                  Already sign?{" "}
+                  <button
+                    onClick={handleForward}
+                    className="text-blue-500 hover:underline"
                   >
-                    Sign in
-                  </Link>
+                    Let Subscribe
+                  </button>
                 </p>
               </div>
             </div>

@@ -6,7 +6,8 @@ import SignupForm from "../SignupForm";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState } from "react";
-import SubscriptionForm from "../SubscriptionForm/SubscriptionForm";
+import SubscriptionForm from "../SubscriptionForm";
+
 
 const style = {
   position: "absolute",
@@ -29,12 +30,15 @@ export default function SubscriptionPopover() {
   const [value, setValue] = useState("1");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    console.log(event)
     setValue(newValue);
   };
 
   const handleBack = () => {
     setValue("1");
+  };
+
+  const handleForward = () => {
+    setValue("2");
   };
   return (
     <div>
@@ -89,7 +93,7 @@ export default function SubscriptionPopover() {
               </TabList>
             </Box>
             <TabPanel value="1" sx={{padding: {xs:"5px", sm:"10px", md:"24px"}}}>
-              <SignupForm />
+              <SignupForm handleForward={handleForward}/>
             </TabPanel>
             <TabPanel value="2" sx={{padding: {xs:"5px", sm:"10px", md:"24px"}}}>
               <SubscriptionForm handleBack={handleBack} />

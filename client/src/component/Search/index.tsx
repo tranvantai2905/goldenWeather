@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
-import { fetchCities } from "../../api/OpenWeatherService";
+import { fetchCities } from "../../api/WeatherService";
 import { notify_error } from "../../App";
 
 interface SearchProps {
@@ -34,7 +34,6 @@ const Search: React.FC<SearchProps> = ({ onSearchChange }) => {
   const loadOptions = async (inputValue: string) => {
     try {
       const citiesList = await fetchCities(inputValue);
-      console.log(citiesList);
       const options = citiesList.data.map((city: CityOption) => {
         return {
           value: `${city.latitude} ${city.longitude}`,

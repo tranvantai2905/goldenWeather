@@ -55,7 +55,7 @@ const DayWeatherDetails: React.FC<DayWeatherDetailsProps> = ({ day, src, descrip
           variant="h4"
           component="h4"
           sx={{
-            fontSize: { xs: '12px', md: '14px' },
+            fontSize: { xs: '8px', md: '9px', lg:"12px" },
             color: 'rgba(255,255,255, .8)',
             lineHeight: 1,
             fontFamily: 'Roboto Condensed',

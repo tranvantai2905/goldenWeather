@@ -32,6 +32,10 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ forecast }) => {
         flexDirection="column"
         xs={12}
         gap="4px"
+        sx={{
+          maxHeight:{sm: 1000, md: 700},
+          overflowY: "hidden",
+        }}
       >
         {forecast.map((forcecastDay, idx) => {
           return (

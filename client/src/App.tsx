@@ -1,5 +1,13 @@
 import "./App.css";
-import { Box, Container, Grid, Link, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Logo from "./assets/logo.png";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import Search from "./component/Search";
@@ -10,15 +18,20 @@ import {
   fetchCurrentWeather,
   fetchWeatherForecast,
   getWeatherHistory,
-} from "./api/OpenWeatherService";
-import { CurrentWeather, ForecastDay, LocationInfo, WeatherHistoryResponse } from "./api/types";
-import TodayWeather from "./component/TodayWeather/TodayWeather";
-import WeeklyForecast from "./component/WeeklyForecast/WeeklyForecast";
-import SubscriptionPopover from "./component/SubscriptionPopover/SubscriptionPopover";
+} from "./api/WeatherService";
+import {
+  CurrentWeather,
+  ForecastDay,
+  LocationInfo,
+  WeatherHistoryResponse,
+} from "./api/types";
+import TodayWeather from "./component/TodayWeather";
+import WeeklyForecast from "./component/WeeklyForecast";
+import SubscriptionPopover from "./component/SubscriptionPopover";
 import { Bounce, toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-import WeatherHistory from "./component/WeatherHistory/WeatherHistory";
+import WeatherHistory from "./component/WeatherHistory";
 
 export const notify_success = (message: string) =>
   toast.success(message, {
@@ -55,20 +68,54 @@ function App() {
     null
   );
   const [forecast, setForecast] = useState<ForecastDay[] | null>(null);
-  const [weatherHistory, setWeatherHistory] = useState<WeatherHistoryResponse[] | null>(null);
+  const [weatherHistory, setWeatherHistory] = useState<
+    WeatherHistoryResponse[] | null
+  >(null);
 
+  const [limit, setLimit] = useState(5);
+  const [historyLimit, setHistoryLimit] = useState(2);
 
-  useEffect(()=>{
-    if(location){
-      getHistory(location.name, 4)
+  useEffect(() => {
+    if (location) {
+      getForcast(location.name, limit);
     }
-  }, [location])
+  }, [location, limit]);
 
-  const getHistory = async(location:string, limit:number)=>{
-    const res = await getWeatherHistory({params:{location, limit}})
-    console.log({res})
-    setWeatherHistory(res)
-  }
+  useEffect(() => {
+    if (location) {
+      getHistory(location.name, historyLimit);
+    }
+  }, [location, historyLimit]);
+
+  const getHistory = async (location: string, limit: number) => {
+    setIsLoading(true);
+    const res = await getWeatherHistory({ params: { location, limit } });
+    if (res) {
+      setIsLoading(false);
+      setWeatherHistory(res?.reverse());
+    } else {
+      notify_error();
+      setError(true);
+      console.error("Failed to fetch weather history data.");
+    }
+  };
+
+  const getForcast = async (location: string, limit: number) => {
+    setIsLoading(true);
+    const forecastRes = await fetchWeatherForecast({
+      location: location,
+      days: limit,
+    });
+    if (forecastRes) {
+      setIsLoading(false);
+      notify_success("Update forecast successfully");
+      setForecast(forecastRes.forecast.forecastday);
+    } else {
+      notify_error();
+      setError(true);
+      console.error("Failed to fetch current weather data.");
+    }
+  };
 
   const searchChangeHandler = async (
     enteredData: { value: string; label: string } | null
@@ -83,25 +130,25 @@ function App() {
       setLocation(res.location);
       setCurrentWeather(res.current);
     } else {
-      notify_error()
+      notify_error();
       setError(true);
       console.error("Failed to fetch current weather data.");
     }
-
-    const forecastRes = await fetchWeatherForecast({
-      location: location,
-      days: 4,
-    });
-    if (forecastRes) {
-      notify_success("Update forecast successfully");
-      setForecast(forecastRes.forecast.forecastday);
-    } else {
-      notify_error()
-      setError(true);
-      console.error("Failed to fetch current weather data.");
-    }
-
     setIsLoading(false);
+  };
+
+  const handleSeemore = () => {
+    setLimit((pre) => pre + 2);
+  };
+  const handleSeeless = () => {
+    if (limit > 2) setLimit((pre) => pre - 2);
+  };
+
+  const handleHistorySeemore = () => {
+    setHistoryLimit((pre) => pre + 2);
+  };
+  const handleHistorySeeless = () => {
+    if (historyLimit > 2) setHistoryLimit((pre) => pre - 2);
   };
 
   console.log({ location }, { currentWeather }, { forecast });
@@ -141,7 +188,7 @@ function App() {
     appContent = (
       <React.Fragment>
         <Grid item xs={12} md={currentWeather ? 6 : 12}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ height: "100%" }}>
             <TodayWeather
               location={location}
               currentWeather={currentWeather}
@@ -149,9 +196,57 @@ function App() {
             />
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          container
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <WeeklyForecast forecast={forecast} />
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            marginBlock={{ xs: "5px", md: "10px" }}
+          >
+            <Button
+              sx={{ color: "white", fontWeight: { sm: 500, md: 800 } }}
+              variant="contained"
+              onClick={() => handleSeemore()}
+            >
+              See more
+            </Button>
+            <Button
+              sx={{ color: "red", fontWeight: { sm: 400, md: 600 } }}
+              onClick={() => handleSeeless()}
+            >
+              See less
+            </Button>
+          </Stack>
+
           <WeatherHistory weatherHistory={weatherHistory} />
+          <Stack
+            direction={{ xs: "column", md: "row" }}
+            marginBlock={{ xs: "5px", md: "10px" }}
+          >
+            <Button
+              sx={{ color: "white", fontWeight: { sm: 500, md: 800 } }}
+              variant="contained"
+              onClick={() => handleHistorySeemore()}
+            >
+              See more
+            </Button>
+            <Button
+              sx={{ color: "red", fontWeight: { sm: 400, md: 600 } }}
+              onClick={() => handleHistorySeeless()}
+            >
+              See less
+            </Button>
+          </Stack>
         </Grid>
       </React.Fragment>
     );
@@ -198,7 +293,14 @@ function App() {
 
   return (
     <div className="flex justify-center items-center">
-      <Stack direction={{sm:"column",md:"row"}} spacing={2} alignItems={{sm:"center", md:"flex-end"}} justifyContent={{sm:"center", md:"center"} } maxWidth={{ xs: "95%", sm: "80%", md: "1500px" }} minWidth={{ md: "1100px" }}>
+      <Stack
+        direction={{ sm: "column", lg: "row" }}
+        spacing={2}
+        alignItems={{ sm: "center", md: "flex-end" }}
+        justifyContent={{ sm: "center", md: "center" }}
+        maxWidth={{ xs: "95%", sm: "80%", md: "2000px" }}
+        minWidth={{ xl: "1700px" }}
+      >
         <Container
           sx={{
             maxWidth: { xs: "95%", sm: "80%", md: "1400px" },

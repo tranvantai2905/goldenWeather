@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { subscribe } from "../../api/OpenWeatherService";
+import { subscribe, unsubscribe } from "../../api/WeatherService";
 import { notify_error, notify_success } from "../../App";
 
 interface SubscriptionFormProps {
@@ -14,13 +14,25 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ handleBack }) => {
       const res = await subscribe({
         email: email.current,
       });
-      console.log(res);
       notify_success(res?.status||"")
     }
     catch{
       notify_error()
     }
   };
+
+  const onUnscriptionSubmit = async () => {
+    try{
+      const res = await unsubscribe({
+        email: email.current,
+      });
+      notify_success(res?.status||"")
+    }
+    catch{
+      notify_error()
+    }
+  };
+
   return (
     <>
       <section className="relative z-10 overflow-hidden">
@@ -98,11 +110,21 @@ const SubscriptionForm: React.FC<SubscriptionFormProps> = ({ handleBack }) => {
                     Subscription
                   </button>
                 </div>
+
+                <div className="xs:mb-2 sm:mb-4 md:mb-8">
+                  <button
+                    className="shadow-submit flex w-full items-center justify-center rounded-sm bg-red-500 px-9 py-4 text-base font-medium text-white duration-300 hover:bg-red-300"
+                    onClick={() => onUnscriptionSubmit()}
+                  >
+                    Unsubscription
+                  </button>
+                </div>
+
                 <p className="text-center sm:text-md md:text-base text-md font-medium text-body-color">
                   Forget to register?{" "}
                   <button
                     onClick={() => handleBack()}
-                    className="text-primary hover:underline"
+                    className="text-blue-500 hover:underline"
                   >
                     Back to sign up
                   </button>

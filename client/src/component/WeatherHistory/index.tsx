@@ -25,12 +25,16 @@ const WeatherHistory: React.FC<WeatherHistoryProps> = ({ weatherHistory }) => {
   if (!noDataProvided)
     content = (
       <Grid
-        item
-        container
-        display="flex"
-        flexDirection="column"
-        xs={12}
-        gap="4px"
+      item
+      container
+      display="flex"
+      flexDirection="column"
+      xs={12}
+      gap="4px"
+      sx={{
+        maxHeight:{sm: 1000, md: 700},
+        overflowY: "hidden",
+      }}
       >
         {weatherHistory.map((history, idx) => {
           return (

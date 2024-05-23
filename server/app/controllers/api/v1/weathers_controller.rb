@@ -15,7 +15,7 @@ module Api
       def current_weather
         weather_service = WeatherService.new
         current_weather = weather_service.current_weather(params[:location])
-
+        
         save_weather(current_weather)
 
         # render json: current_weather
@@ -48,7 +48,6 @@ module Api
         existing_weather = Weather.where(location: location, created_at: date.all_day).first
     
         unless existing_weather
-          # Tạo bản ghi mới nếu chưa tồn tại
           weather = Weather.new(
             location: location,
             temperature: current_weather.dig('current', 'temp_c'),

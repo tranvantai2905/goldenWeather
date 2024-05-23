@@ -131,6 +131,16 @@ export type SubscribeResponse = {
   status: string;
 };
 
+//UnSubscrible
+
+export type UnSubscribePayload = {
+  email: string;
+};
+
+export type UnSubscribeResponse = {
+  status: string;
+};
+
 //History
 
 export type WeatherHistoryResponse = {

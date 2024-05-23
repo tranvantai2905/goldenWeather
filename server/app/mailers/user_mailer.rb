@@ -5,7 +5,14 @@ class UserMailer < ApplicationMailer
   def confirmation_email(user)
     @user = user
     p user.email
-    @url  = "https://goldenweather.onrender.com/api/v1/subscriptions/confirm?token=#{@user.confirmation_token}"
+    @url  = "#{ENV['SERVER_URL']}/subscriptions/confirm?token=#{@user.confirmation_token}"
+    mail(to: @user.email, subject: 'Please confirm your email address')
+  end
+
+  def confirmation_unsubscribe_email(user)
+    @user = user
+    p user.email
+    @url  = "#{ENV['SERVER_URL']}/subscriptions/unsubscribe_confirm?token=#{@user.confirmation_token}"
     mail(to: @user.email, subject: 'Please confirm your email address')
   end
 

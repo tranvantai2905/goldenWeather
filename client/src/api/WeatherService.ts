@@ -1,5 +1,5 @@
 import instance from "./instance";
-import { FetchCurrentWeatherPayload, FetchWeatherForecastPayload, ForecastResponse, SignUpPayload, SignUpResponse, SubscribePayload, SubscribeResponse, WeatherHistoryParam, WeatherHistoryResponse, WeatherResponse } from "./types";
+import { FetchCurrentWeatherPayload, FetchWeatherForecastPayload, ForecastResponse, SignUpPayload, SignUpResponse, SubscribePayload, SubscribeResponse, UnSubscribePayload, UnSubscribeResponse, WeatherHistoryParam, WeatherHistoryResponse, WeatherResponse } from "./types";
 
 const GEO_API_URL = 'https://wft-geo-db.p.rapidapi.com/v1/geo';
 
@@ -69,6 +69,16 @@ export async function signUp(payload: SignUpPayload): Promise<SignUpResponse | n
 export async function subscribe(payload: SubscribePayload): Promise<SubscribeResponse | null> {
   try {
       const response = await instance.post<SubscribeResponse>('/subscriptions/subscribe', payload);
+      return response.data;
+  } catch (error) {
+      console.error('Error subscribing:', error);
+      throw Error('Error subscribing');
+  }
+}
+
+export async function unsubscribe(payload: UnSubscribePayload): Promise<UnSubscribeResponse | null> {
+  try {
+      const response = await instance.post<SubscribeResponse>('/subscriptions/unsubscribe', payload);
       return response.data;
   } catch (error) {
       console.error('Error subscribing:', error);
