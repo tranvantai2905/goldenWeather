@@ -37,7 +37,7 @@ To get a local copy of the project up and running, follow these simple steps.
 
 ### Prerequisites
 
-- Node.js and npm installed on your machine
+- Node.js and yarn installed on your machine
 - Ruby and Rails installed on your machine
 - PostgreSQL (or any preferred database)
 
